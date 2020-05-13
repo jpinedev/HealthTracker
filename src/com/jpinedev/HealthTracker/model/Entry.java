@@ -2,6 +2,9 @@ package com.jpinedev.HealthTracker.model;
 
 import java.util.Calendar;
 
+/**
+ * A class to represent a data point for a measurement. Sortable by time of the entry.
+ */
 public class Entry implements Comparable<Entry> {
 
   private final Calendar time;
@@ -16,10 +19,21 @@ public class Entry implements Comparable<Entry> {
     this(Calendar.getInstance(), amt);
   }
 
+  /**
+   * Getter for the amount of the entry.
+   *
+   * @return the amount of the entry.
+   */
   public double getAmt() {
     return this.amt;
   }
 
+  /**
+   * Determines if the entry is on the specified day.
+   *
+   * @param day to be checked against
+   * @return if the entry is on the specified day
+   */
   public boolean sameDay(Calendar day) {
     return this.time.get(Calendar.DAY_OF_YEAR) == day.get(Calendar.DAY_OF_YEAR)
         && this.time.get(Calendar.YEAR) == day.get(Calendar.YEAR);
