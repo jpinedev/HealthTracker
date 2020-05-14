@@ -97,4 +97,16 @@ public abstract class AbstractMeasure implements Measure, Comparable<AbstractMea
     return this.name.compareTo(am.name);
   }
 
+  @Override
+  public String toString() {
+    String result = "";
+    for (int i = 0; i < this.log.size(); i++) {
+      result += this.log.get(i);
+      if (i + 1 < this.log.size()) {
+        result += "\n";
+      }
+    }
+    return result;
+  }
+
 }

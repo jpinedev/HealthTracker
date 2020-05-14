@@ -81,7 +81,7 @@ public class Entry implements Comparable<Entry> {
   @Override
   public String toString() {
     return String.format("%d/%d/%d : %."+precision+"f"+units,
-        this.time.get(Calendar.MONTH),
+        this.time.get(Calendar.MONTH) + 1,
         this.time.get(Calendar.DAY_OF_MONTH),
         this.time.get(Calendar.YEAR),
         this.amt);
