@@ -10,37 +10,39 @@ import java.util.Calendar;
  */
 public abstract class AbstractMeasure implements Measure, Comparable<AbstractMeasure> {
 
+  private final String type;
   private final String name;
   private final String units;
-  private int precision;
+  private final int precision;
   private ArrayList<Entry> log;
 
-  public AbstractMeasure(String name, String units, int precision) {
+  public AbstractMeasure(String type, String name, String units, int precision) {
+    this.type = type;
     this.name = name;
     this.units = units;
     this.precision = precision;
     this.log = new ArrayList<Entry>();
   }
 
-  public AbstractMeasure(String name, String units) {
-    this(name, units, 1);
+  public AbstractMeasure(String type, String name, String units) {
+    this(type, name, units, 1);
   }
 
   @Override
   public void addEntry(double data) {
-    this.log.add(new Entry(data));
+    this.log.add(new Entry(this.units, this.precision, data));
     Collections.sort(this.log);
   }
 
   @Override
   public void addEntry(Calendar time, double data) {
-    this.log.add(new Entry(time, data));
+    this.log.add(new Entry(this.units, this.precision, time, data));
     Collections.sort(this.log);
   }
 
   @Override
   public void removeEntry(Calendar time, double data) {
-    this.log.remove(new Entry(time, data));
+    this.log.remove(new Entry(this.units, this.precision, time, data));
   }
 
   @Override
@@ -73,15 +75,12 @@ public abstract class AbstractMeasure implements Measure, Comparable<AbstractMea
     if (this.log.size() == 1) {
       return this.log.get(0).getAmt();
     }
-    double total = 0;
-    double daysSince = this.log.get(this.log.size() - 1).daysSince(this.log.get(0));
+    double totalAmt = 0;
+    double totalDays = this.log.get(this.log.size() - 1).daysSince(this.log.get(0)) + 1;
     for (Entry entry : this.log) {
-      total += entry.getAmt();
+      totalAmt += entry.getAmt();
     }
-    if (daysSince < 1) {
-      return total;
-    }
-    return total / daysSince;
+    return totalAmt / totalDays;
   }
 
   @Override
@@ -91,6 +90,10 @@ public abstract class AbstractMeasure implements Measure, Comparable<AbstractMea
 
   @Override
   public int compareTo(AbstractMeasure am) {
+    int typeCompare = this.type.compareTo(am.type);
+    if (typeCompare != 0) {
+      return typeCompare;
+    }
     return this.name.compareTo(am.name);
   }
 

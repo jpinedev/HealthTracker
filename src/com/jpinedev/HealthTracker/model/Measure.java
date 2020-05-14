@@ -55,7 +55,7 @@ public interface Measure {
 
   /**
    * Average all weekly totals between the first entry and the last.
-   * 
+   *
    * @return weekly average
    */
   // TODO double weeklyAverage();

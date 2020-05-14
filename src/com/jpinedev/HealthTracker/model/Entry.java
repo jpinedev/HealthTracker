@@ -9,14 +9,18 @@ public class Entry implements Comparable<Entry> {
 
   private final Calendar time;
   private final double amt;
+  private final String units;
+  private final int precision;
 
-  public Entry(Calendar time, double amt) {
+  public Entry(String units, int precision, Calendar time, double amt) {
+    this.units = units;
+    this.precision = precision;
     this.time = time;
     this.amt = amt;
   }
 
-  public Entry(double amt) {
-    this(Calendar.getInstance(), amt);
+  public Entry(String units, int precision, double amt) {
+    this(units, precision, Calendar.getInstance(), amt);
   }
 
   /**
@@ -51,8 +55,8 @@ public class Entry implements Comparable<Entry> {
   }
 
   public double daysSince(Entry e) {
-    return e.time.get(Calendar.DAY_OF_YEAR) - this.time.get(Calendar.DAY_OF_YEAR)
-        + (e.time.get(Calendar.YEAR) - this.time.get(Calendar.YEAR)) * 364.25;
+    return this.time.get(Calendar.DAY_OF_YEAR) - e.time.get(Calendar.DAY_OF_YEAR)
+        + (this.time.get(Calendar.YEAR) - e.time.get(Calendar.YEAR)) * 364.25;
   }
 
   @Override
@@ -72,6 +76,15 @@ public class Entry implements Comparable<Entry> {
   @Override
   public int compareTo(Entry o) {
     return this.time.compareTo(o.time);
+  }
+
+  @Override
+  public String toString() {
+    return String.format("%d/%d/%d : %."+precision+"f"+units,
+        this.time.get(Calendar.MONTH),
+        this.time.get(Calendar.DAY_OF_MONTH),
+        this.time.get(Calendar.YEAR),
+        this.amt);
   }
 
 }
