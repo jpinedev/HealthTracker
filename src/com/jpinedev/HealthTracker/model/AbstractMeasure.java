@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Calendar;
 
 /**
- * An abstract class to represent a measurement of any type.
- * Sortable alphabetically by kind of measurement.
+ * An abstract class to represent a measurement of any type. Sortable alphabetically by kind of
+ * measurement.
  */
 public abstract class AbstractMeasure implements Measure, Comparable<AbstractMeasure> {
 
@@ -52,6 +52,41 @@ public abstract class AbstractMeasure implements Measure, Comparable<AbstractMea
       }
     }
     return total;
+  }
+
+  @Override
+  public double weeklyTotal(Calendar dayInWeek) {
+    double total = 0;
+    for (Entry entry : this.log) {
+      if (entry.sameWeek(dayInWeek)) {
+        total += entry.getAmt();
+      }
+    }
+    return total;
+  }
+
+  @Override
+  public double dailyAverage() {
+    if (this.log.size() == 0) {
+      return 0;
+    }
+    if (this.log.size() == 1) {
+      return this.log.get(0).getAmt();
+    }
+    double total = 0;
+    double daysSince = this.log.get(this.log.size() - 1).daysSince(this.log.get(0));
+    for (Entry entry : this.log) {
+      total += entry.getAmt();
+    }
+    if (daysSince < 1) {
+      return total;
+    }
+    return total / daysSince;
+  }
+
+  @Override
+  public double dailyAverageOfWeek(Calendar dayInWeek) {
+    return this.weeklyTotal(dayInWeek) / 7;
   }
 
   @Override

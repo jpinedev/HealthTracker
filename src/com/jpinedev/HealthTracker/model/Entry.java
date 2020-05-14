@@ -39,6 +39,22 @@ public class Entry implements Comparable<Entry> {
         && this.time.get(Calendar.YEAR) == day.get(Calendar.YEAR);
   }
 
+  /**
+   * Determines if the entry is on the specified week.
+   *
+   * @param dayInWeek to be checked against
+   * @return if the entry is in the specified week
+   */
+  public boolean sameWeek(Calendar dayInWeek) {
+    return this.time.get(Calendar.WEEK_OF_YEAR) == dayInWeek.get(Calendar.WEEK_OF_YEAR)
+        && this.time.get(Calendar.YEAR) == dayInWeek.get(Calendar.YEAR);
+  }
+
+  public double daysSince(Entry e) {
+    return e.time.get(Calendar.DAY_OF_YEAR) - this.time.get(Calendar.DAY_OF_YEAR)
+        + (e.time.get(Calendar.YEAR) - this.time.get(Calendar.YEAR)) * 364.25;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Entry)) {

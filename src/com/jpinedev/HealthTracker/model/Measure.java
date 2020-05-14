@@ -38,4 +38,34 @@ public interface Measure {
    */
   double dailyTotal(Calendar day);
 
+  /**
+   * Sum up of all entries on the specified week.
+   *
+   * @param dayInWeek of the entries to be totaled
+   * @return total of the entries in that week
+   */
+  double weeklyTotal(Calendar dayInWeek);
+
+  /**
+   * Average all daily totals between the first entry and the last.
+   *
+   * @return daily average
+   */
+  double dailyAverage();
+
+  /**
+   * Average all weekly totals between the first entry and the last.
+   * 
+   * @return weekly average
+   */
+  // TODO double weeklyAverage();
+
+  /**
+   * Average all days in the specified week.
+   *
+   * @param dayInWeek of the entries to be averaged
+   * @return average of daily totals from that week
+   */
+  double dailyAverageOfWeek(Calendar dayInWeek);
+
 }
