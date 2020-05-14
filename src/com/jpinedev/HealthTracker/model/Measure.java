@@ -37,4 +37,5 @@ public interface Measure {
    * @return total of the entries on that day
    */
   double dailyTotal(Calendar day);
+
 }
