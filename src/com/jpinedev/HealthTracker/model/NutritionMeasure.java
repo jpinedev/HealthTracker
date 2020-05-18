@@ -6,7 +6,7 @@ package com.jpinedev.HealthTracker.model;
 public class NutritionMeasure extends AbstractMeasure {
 
   public NutritionMeasure(String name, String units) {
-    super("Nutrition", name, units);
+    super(MeasureType.NUTRITION, name, units);
   }
 
 }

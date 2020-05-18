@@ -68,4 +68,6 @@ public interface Measure {
    */
   double dailyAverageOfWeek(Calendar dayInWeek);
 
+  String log();
+
 }

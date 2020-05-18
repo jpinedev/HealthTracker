@@ -10,21 +10,21 @@ import java.util.Calendar;
  */
 public abstract class AbstractMeasure implements Measure, Comparable<AbstractMeasure> {
 
-  private final String type;
+  private final MeasureType type;
   private final String name;
   private final String units;
   private final int precision;
-  private ArrayList<Entry> log;
+  private EntryLog log;
 
-  public AbstractMeasure(String type, String name, String units, int precision) {
+  public AbstractMeasure(MeasureType type, String name, String units, int precision) {
     this.type = type;
     this.name = name;
     this.units = units;
     this.precision = precision;
-    this.log = new ArrayList<Entry>();
+    this.log = new EntryLog();
   }
 
-  public AbstractMeasure(String type, String name, String units) {
+  public AbstractMeasure(MeasureType type, String name, String units) {
     this(type, name, units, 1);
   }
 
@@ -84,29 +84,23 @@ public abstract class AbstractMeasure implements Measure, Comparable<AbstractMea
   }
 
   @Override
+  public String log() {
+    return this.log.toString();
+  }
+
+  @Override
   public double dailyAverageOfWeek(Calendar dayInWeek) {
     return this.weeklyTotal(dayInWeek) / 7;
   }
 
   @Override
   public int compareTo(AbstractMeasure am) {
-    int typeCompare = this.type.compareTo(am.type);
-    if (typeCompare != 0) {
-      return typeCompare;
-    }
-    return this.name.compareTo(am.name);
+    return this.toString().compareTo(am.toString());
   }
 
   @Override
   public String toString() {
-    String result = "";
-    for (int i = 0; i < this.log.size(); i++) {
-      result += this.log.get(i);
-      if (i + 1 < this.log.size()) {
-        result += "\n";
-      }
-    }
-    return result;
+    return String.format("%s: %s with %d entries.", this.type, this.name, this.log.size());
   }
 
 }

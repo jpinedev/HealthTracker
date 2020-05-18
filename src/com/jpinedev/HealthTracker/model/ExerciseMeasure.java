@@ -6,7 +6,7 @@ package com.jpinedev.HealthTracker.model;
 public class ExerciseMeasure extends AbstractMeasure {
 
   public ExerciseMeasure(String name, String units) {
-    super("Exercise", name, units);
+    super(MeasureType.EXERCISE, name, units);
   }
 
 }
